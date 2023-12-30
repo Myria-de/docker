@@ -1,0 +1,37 @@
+version: '2'
+services:
+   db:
+     image: mysql:5.7
+     container_name: mysql
+     volumes:
+       - db_data:/var/lib/mysql
+     restart: always
+     environment:
+       MYSQL_ROOT_PASSWORD: wordpress
+       MYSQL_DATABASE: wordpress
+       MYSQL_USER: wordpress
+       MYSQL_PASSWORD: wordpress
+     networks:
+      - wordpress-net
+   wordpress:
+     image: wordpress:latest
+     container_name: wordpress
+     ports:
+       - 80
+     restart: always
+     environment:
+       WORDPRESS_DB_HOST: db:3306
+       WORDPRESS_DB_USER: wordpress
+       WORDPRESS_DB_PASSWORD: wordpress
+     networks:
+      - npm
+      - wordpress-net
+networks:
+  wordpress-net:
+    name: wordpress-net
+    driver: bridge
+  npm:
+    external: true
+    
+volumes:
+    db_data:
