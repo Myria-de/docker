@@ -1,0 +1,36 @@
+FROM ubuntu:latest
+SHELL ["/bin/bash", "-c"]
+EXPOSE 5900 6099
+# Change Password!
+ENV \
+  DEBIAN_FRONTEND="nonintractive" \
+  X11VNC_PASSWORD="1234"
+
+RUN apt update && apt install -y x11vnc xvfb sudo software-properties-common bash locales fluxbox
+ADD ./entrypoint.sh /opt/entrypoint.sh
+RUN chmod /opt/entrypoint.sh 775
+# Set local to de_DE.UTF-8 (German)
+RUN localedef -i de_DE -c -f UTF-8 -A /usr/share/locale/locale.alias de_DE.UTF-8
+#ENV LANG en_US.utf8
+ENV LANG de_DE.UTF-8  
+ENV LANGUAGE de_DE:en  
+ENV LC_ALL de_DE.UTF-8
+
+# Install Firefox
+RUN add-apt-repository ppa:mozillateam/ppa && \
+echo $'Package: * \n\
+Pin: release o=LP-PPA-mozillateam \n\
+Pin-Priority: 1001 \n\
+' >> /etc/apt/preferences.d/mozilla-firefox && \
+echo 'Unattended-Upgrade::Allowed-Origins:: "LP-PPA-mozillateam:${distro_codename}";' >> /etc/apt/apt.conf.d/51unattended-upgrades-firefox && \
+apt update && \
+apt install -y firefox firefox-locale-de
+
+# Create User
+RUN useradd -rm -d /home/docker_user -s /bin/bash -g root -G sudo -u 1000 docker_user -p "$(openssl passwd -1 1234)"
+USER docker_user
+WORKDIR /home/docker_user
+ENV HOME /home/docker_user
+RUN mkdir -p /home/docker_user/.fluxbox
+ADD ./menu /home/docker_user/.fluxbox/menu
+ENTRYPOINT /opt/entrypoint.sh
