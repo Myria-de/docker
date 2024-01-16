@@ -70,7 +70,7 @@ docker ps
 ```
 Wenn Sie einen interaktiven Container („run -i“) mit exit verlassen, wird er gestoppt. Mit
 ```
-docker -a
+docker ps -a
 ```
 erhalten Sie eine Übersicht mit allen vorhandenen Containern. In der Ausgabe sehen Sie auch die inaktiven Container und deren IDs. Mit 
 ```
