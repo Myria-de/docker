@@ -89,12 +89,17 @@ docker run --help
 Wichtig ist noch der Befehl „rm“, mit dem Sie Container löschen, oder „rmi“ zum Löschen von Images – jeweils gefolgt von der gewünschten Container-ID beziehungsweise Image-ID.
 
 # Docker über den Webbrowser verwalten
-Docker-Verwaltung Portainer (www.portainer.io).
+Für einfache Aufgaben reichen die Docker-Befehle im Terminal meist aus. Sobald man jedoch mehrere Images und Container für Webanwendungen einrichten möchte, verwendet man besser eine grafische Oberfläche. Dafür empfiehlt sich die Docker-Verwaltung Portainer (www.portainer.io), die selbst über Docker installiert wird. Dafür verwenden Sie im Terminal diese Befehlszeile:
 ```
 docker run -d -p 8000:8000 -p 9443:9443 --name=portainer --restart=always -v /$XDG_RUNTIME_DIR/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce
 ```
-Anschließend rufen Sie die URL https://localhost:9443 im Webbrowser auf. 
+Anschließend rufen Sie die URL https://localhost:9443 im Webbrowser auf. Da Portainer ein selbst signiertes Zertifikat verwendet erhalten Sie eine Warnung. In Firefox klicken Sie auf „Erweitert“ und dann auf „Risiko akzeptieren und fortfahren“.
 
+Geben Sie Benutzername und Passwort für den administrativen Benutzer ein, klicken Sie auf „Create user“, dann auf „Get started“ und anschließend auf „Live connect“.
+Im Menü auf der linken Seite des Fensters sehen Sie nach einem Klick auf „Images“ die bisher erstellten Docker-Images. Bei nicht mehr benötigten Images können Sie ein Häkchen setzen und auf „Remove“ klicken.
+
+Gehen Sie auf „Containers“. Hier werden die Container angezeigt, die Spalte „State“ enthält „exited“ bei gestoppten Containern, andernfalls „running“. Sie können Container markieren und starten. In der Spalte „Quick Actions“ lässt sich über das Icon „Exec Console“ (zweites von rechts) nach einem Klick auf „Connect“ ein Terminal im Browser aufrufen.
+Um die Konfiguration eines Containers zu ändern, klicken Sie ihn in der Spalte „Name“ an. Sie können beispielsweise hinter „Restart policies“ den Wert „Allways“ wählen und auf „Update“ klicken. Der Container wird dann nach einem Linux-Neustart automatisch aktiviert.
 # Firefox in Docker starten
 Klicken Sie auf „Firefox-Docker.tar.gz“ und dann auf „Raw“. Entpacken Sie das Archiv im Dowload-Verzeichnis und öffnen Sie den Ordner im Terminal. Starten Sie 
 ```
