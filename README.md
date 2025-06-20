@@ -1,4 +1,7 @@
 # Docker unter Ubuntu/Linux Mint installieren
+Docker ist in den Repositorien populärer Linux-Distributionen meist enthalten. In Ubuntu 22.04 und seinen Varianten heißt das deb-Paket „docker.io“. Auch wenn die Einrichtung über das Paketmanagement einfacher ist, empfehlen wir die manuelle Installation der aktuellsten Version, die wir in diesem Artikel für Ubuntu 22.04/Linux Mint 21 und verwandte Distributionen beschreiben. Docker befindet sich in in stetiger Entwicklung und einige Zusatz- oder Verwaltungs-Programme erfordern neuere Versionen, als im Ubuntu-Repositorium bereitstehen. 
+
+Docker läuft standardmäßig als Systemdienst mit root-Rechten, kann aber sicherer auch ohne erhöhte Privilegien genutzt werden. Zur Installation öffnen Sie ein Terminalfenster (Strg-Alt-T) und führen die folgenden vier Befehlszeilen aus:
 
 ```
 sudo apt-get update
